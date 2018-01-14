@@ -3,16 +3,16 @@ const express = require('express')
 const print = require('./print/print')
 const mongoose = require('mongoose')
 const config = require('./config')
+const routes = require('./routes/app')
+const body = require('body-parser')
 
 const app = express()
 
 const port = process.env.PORT || 3000
 
-
-
-app.get('/', (req, res) => {
-    res.status(200).json({message: 'todo bien'})
-})
+app.use(body.urlencoded({ extended: false }))
+app.use(body.json())
+app.use('/api', routes)
 
 async function start() {
     mongoose.Promise = global.Promise;
