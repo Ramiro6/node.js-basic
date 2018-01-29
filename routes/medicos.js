@@ -1,9 +1,8 @@
 'use strict'
-const apidb = require('../api-db/hospitales')
+const apidb = require('../api-db/medicos')
+const apidbUser = require('../api-db/hospitales')
 const print = require('../print/print')
 const jwt = require('../middleware/jwt')
-
-
 
 const all = async (req, res) => {
     let desde = req.query.desde || 0
@@ -22,8 +21,7 @@ const all = async (req, res) => {
 const takeToken = async (data) => {
     const token = jwt.decode(data.split(" ")[1])
     try {
-        const data = await apidb.findEmail(token)
-        // console.log(data._id);
+        const data = await apidbUser.findEmail(token)
         return data
     } catch (e) {
         console.error(e);
@@ -32,11 +30,12 @@ const takeToken = async (data) => {
 
 
 const create = async (req, res) => {
-    const { nombre, img, usuario } = req.body
+    const { nombre, img, usuario, hospital } = req.body
     const q = { 
         nombre, 
         img, 
-        usuario: await takeToken(req.headers.authorization)  
+        usuario: await takeToken(req.headers.authorization),
+        hospital: await apidb.findId(hospital)
     }
     try {
         const saveName = await apidb.create(q)
@@ -47,7 +46,7 @@ const create = async (req, res) => {
     }
 }
 
-const updateUser = async (req, res) => {
+const updateMedico = async (req, res) => {
     const id = req.params
     const { nombre, img } = req.body
     const q = { nombre, img }
@@ -60,7 +59,7 @@ const updateUser = async (req, res) => {
     }
 }
 
-const deleteHospiatl = async (req, res) => {
+const deleteMedico = async (req, res) => {
     const id = req.params
     try {
         const deleleHospital = await apidb.delete(id.id)
@@ -76,6 +75,6 @@ const deleteHospiatl = async (req, res) => {
 module.exports = {
     all,
     create,
-    updateUser,
-    deleteHospiatl
+    updateMedico,
+    deleteMedico
 }

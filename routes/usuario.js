@@ -3,11 +3,14 @@ const apidb = require('../api-db/usuario')
 const print = require('../print/print')
 const bcrypt = require('bcryptjs')
 
+
 const all = async (req, res) => {
-    // res.status(200).json({message: 'todo bien'})
+    let desde = req.query.desde || 0
+    desde = Number(desde)
     try {
-        const x = await apidb.findall()
-        res.status(200).send(x)
+        const x = await apidb.findall().skip(desde).limit(3)
+        const countAll = await apidb.count()
+        res.send({x, countAll})
         print.print('send data')
     } catch(e) {
         res.status(500).send({message: e})

@@ -8,6 +8,10 @@ module.exports = {
         return model.find({})
     },
 
+    findNombre: (e) => {
+        return model.find({nombre: e})
+    },
+
     create: (e) => {
         let newUser = new model(e)
         return newUser.save()
@@ -23,5 +27,17 @@ module.exports = {
 
     findEmail: (e) => {
         return modelUsuario.findOne({email: e})
+    },
+
+    count: () => {
+        return model.count({})
+    },
+
+    updateImage: (e, update) => {
+        return model.findByIdAndUpdate({_id: e}, {img: update}, {new: true})
+    },
+
+    findById: (e) => {
+        return model.findById({_id: e})
     }
 }

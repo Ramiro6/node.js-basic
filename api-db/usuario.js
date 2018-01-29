@@ -18,5 +18,17 @@ module.exports = {
 
     delete: (e) => {
         return model.findByIdAndRemove({_id: e})
+    },
+
+    count: () => {
+        return model.count({})
+    },
+
+    updateImage: (e, update) => {
+        return model.findByIdAndUpdate({_id: e}, {img: update}, {new: true})
+    },
+
+    findById: (e) => {
+        return model.findById({_id: e})
     }
 }
