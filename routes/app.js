@@ -7,6 +7,7 @@ const medico = require('./medicos')
 const busqueda = require('./busqueda')
 const upload = require('./upload')
 const login = require('./login')
+const imagen = require('./imagenes')
 const protect = require('express-jwt')
 const config = require('../config')
 
@@ -39,5 +40,7 @@ app.get('/coleccion/:tabla/:busqueda', busqueda.tabla)
 
 // upload
 app.put('/upload/:tipo/:id', upload.upload)
+
+app.get('/:tipo/:img', imagen.imagenes)
 
 module.exports = app

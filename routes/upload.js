@@ -101,6 +101,9 @@ const subirPorTipo = async (tipo, id, nombreDelArchivo, res) => {
 
             // const idViejo = await apiUser.findById(id)
             const idViejo = await apiMedic.findById(id)
+
+            console.log(idViejo);
+
             let pathViejo = './upload/usuario/' + idViejo.img
 
             if ( fs.existsSync(pathViejo)) {

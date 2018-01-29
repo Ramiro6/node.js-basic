@@ -42,4 +42,8 @@ module.exports = {
         return model.findByIdAndUpdate({_id: e}, {img: update}, {new: true})
     },
 
+    findById: (e) => {
+        return model.findById({_id: e})
+    }
+
 }
